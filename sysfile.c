@@ -78,15 +78,23 @@ sys_read(void)
   return fileread(f, p, n);
 }
 
+struct spinlock write_count_lock;
+static int write_count = 0;
+
 int
 sys_write(void)
 {
+
   struct file *f;
   int n;
   char *p;
 
   if(argfd(0, 0, &f) < 0 || argint(2, &n) < 0 || argptr(1, &p, n) < 0)
     return -1;
+
+  acquire(&write_count_lock);
+  write_count++;
+  release(&write_count_lock);
   return filewrite(f, p, n);
 }
 
@@ -441,4 +449,12 @@ sys_pipe(void)
   fd[0] = fd0;
   fd[1] = fd1;
   return 0;
+}
+
+int sys_writecount() {
+  int tmp_write_count = 0;
+  acquire(&write_count_lock);
+  tmp_write_count = write_count;
+  release(&write_count_lock);
+  return tmp_write_count;
 }

@@ -1,4 +1,6 @@
 #include "param.h"
+#include "types.h"
+
 struct stat;
 struct rtcdate;
 
@@ -26,6 +28,7 @@ int sleep(int);
 int uptime(void);
 int yield(void);
 int shutdown(void);
+int writecount(void);
 
 // ulib.c
 int stat(const char*, struct stat*);
