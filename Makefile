@@ -173,6 +173,7 @@ mkfs: mkfs.c fs.h param.h
 .PRECIOUS: %.o
 
 UPROGS=\
+	_writecount\
 	_cat\
 	_echo\
 	_forktest\
