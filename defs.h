@@ -1,4 +1,5 @@
 #include "param.h"
+#include "types.h"
 struct buf;
 struct context;
 struct file;
